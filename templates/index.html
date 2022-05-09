@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<!-- Created By CodingNepal - www.codingnepalweb.com -->
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Todo App JavaScript | CodingNepal</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+</head>
+
+<body>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        ::selection {
+            color: #ffff;
+            background: #88a3a7;
+        }
+
+        body {
+            width: 100%;
+            height: auto;
+            /* overflow: hidden; */
+            padding: 10px;
+            /* background: linear-gradient(to bottom, #F0EEE9 0%, #1C4A50 100%); */
+            background: #1C4A50;
+
+        }
+
+        .wrapper {
+            background: #fff;
+            max-width: 600px;
+            width: 100%;
+            margin: 40px auto;
+            padding: 25px;
+            border-radius: 5px;
+            box-shadow: 0px 10px 15px rgba(0, 0, 0, 0.1);
+
+        }
+
+        .wrapper header {
+            font-size: 30px;
+            margin-bottom: 10px;
+            font-weight: 600;
+            color: #1C4A50;
+            text-align: center;
+
+        }
+
+
+
+        h2 {
+
+            font-size: 25px;
+            color: rgb(56, 56, 56);
+
+            font-weight: 600;
+
+
+        }
+
+        .do-text {
+            color: #C8A978;
+        }
+
+        h3 {
+
+
+            font-weight: 400;
+
+            font-size: 18px;
+
+
+        }
+
+        p {
+            color: rgb(110, 109, 109);
+
+
+        }
+
+        .icon-sadr {
+            margin-right: 3px;
+        }
+
+        .wrapper .inputField {
+            margin: 20px 0;
+            width: 100%;
+            display: flex;
+            height: 45px;
+        }
+
+        .inputField input {
+            width: 85%;
+            height: 100%;
+            outline: none;
+            border-radius: 3px;
+            border: 1px solid #ccc;
+            font-size: 17px;
+            padding-left: 15px;
+            transition: all 0.3s ease;
+        }
+
+        .inputField input:focus {
+            border-color: #C8A978;
+        }
+
+        .inputField button {
+            width: 50px;
+            height: 100%;
+            border: none;
+            color: #fff;
+            margin-left: 5px;
+            font-size: 21px;
+            outline: none;
+            background: #C8A978;
+            cursor: pointer;
+            border-radius: 3px;
+            opacity: 0.6;
+            pointer-events: none;
+            transition: all 0.3s ease;
+        }
+
+        .inputField button:hover,
+        .footer button:hover {
+            background: #C8A978;
+        }
+
+        .inputField button.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .wrapper .todoList {
+            max-height: 150px;
+            overflow-y: auto;
+            margin-bottom: auto;
+
+
+        }
+
+        .todoList li {
+            position: relative;
+            list-style: none;
+            margin-bottom: 10px;
+            background: #f2f2f2;
+            border-radius: 3px;
+            padding: 12px 15px;
+            cursor: default;
+            overflow: hidden;
+            word-wrap: break-word;
+        }
+
+        .todoList li .icon {
+            position: absolute;
+            right: -45px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: #e74c3c;
+            width: 45px;
+            text-align: center;
+            color: #fff;
+            padding: 10px 15px;
+            border-radius: 0 3px 3px 0;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .todoList li:hover .icon {
+            right: 0px;
+        }
+
+        .wrapper .footer {
+            display: flex;
+            width: 100%;
+            margin-top: 20px;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .footer span {
+
+            color: #1C4A50;
+            font-weight: 400;
+
+        }
+
+        .footer button {
+            padding: 6px 10px;
+            border-radius: 3px;
+            border: none;
+            outline: none;
+            color: #fff;
+            font-weight: 400;
+            font-size: 16px;
+            margin-left: 5px;
+            background: #C8A978;
+            cursor: pointer;
+            user-select: none;
+            transition: all 0.3s ease;
+        }
+
+        .footer button.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+    </style>
+    <div class="wrapper">
+
+        <header>
+            {% load static %}
+            <img src="{%  static 'assets/images/logo1.png' %}" height="66.6423px" width="241.7125px" alt="logo" />
+
+        </header>
+
+        <h2 id="table2"> <span class="do-text"> To do </span> list</h2>
+
+
+        <form action="" method="post">
+            {% csrf_token %}
+            <div class="inputField">
+
+                <input type="text" placeholder="Add your new todo" name="title">
+                <button type="submit"><i class="fas fa-plus"></i></button>
+
+            </div>
+        </form>
+        <div id="table">
+            <h3><span>{% load static %}<img class="icon-sadr" src="{%  static 'assets/images/icon.png' %}" height="20px"
+                        width="20px"></span>Sadr Logictics Services
+                Task</h3>
+            <p id="date"></p>
+
+            <ul class="todoList">
+                <!-- data are comes from local storage -->
+                {%for todo in todos reversed %}
+                <li>{{todo.title | title}}<span class="icon"><a style="text-decoration: none; color:#fff"
+                            href="delete/{{todo.id}}"><i class="fas fa-trash"></i></a></span></li>
+                {% endfor %}
+            </ul>
+        </div>
+
+        <div class="footer">
+            <span>You can <span></span> download your tasks</span>
+            <div>
+                <button id="buttons-pdf"> PDF </button>
+                <button id="buttons-pdf"> Excel </button>
+            </div>
+
+
+        </div>
+
+        <script>
+            const inputBox = document.querySelector(".inputField input");
+            const addBtn = document.querySelector(".inputField button");
+            const todoList = document.querySelector(".todoList");
+            const deleteAllBtn = document.querySelector(".footer button");
+            // onkeyup event
+            inputBox.onkeyup = () => {
+                let userEnteredValue = inputBox.value; //getting user entered value
+                if (userEnteredValue.trim() != 0) { //if the user value isn't only spaces
+                    addBtn.classList.add("active"); //active the add button
+                } else {
+                    addBtn.classList.remove("active"); //unactive the add button
+                }
+            }
+
+        </script>
+        <script src="{% static 'assets/js/html2pdf.bundle.min.js' %}"></script>
+        <script type="text/JavaScript">
+                document.getElementById('buttons-pdf').onclick = function () {
+                    var element = document.getElementById('table');
+                  
+                    var opt = {
+                        margin: 1,
+                        filename: 'My task.pdf',
+                        html2canvas: { scale: 2 },
+                        jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
+                    };
+                     html2pdf(element, opt);
+        
+                };
+              let dateObj = new Date();
+              let myDate = (dateObj.getUTCFullYear()) + "-" + (dateObj.getMonth() + 1);
+               document.getElementById("date").innerHTML = myDate;
+               
+               
+            </script>
+
+</body>
+
+</html>
